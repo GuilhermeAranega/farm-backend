@@ -1,0 +1,32 @@
+{
+  "name": "farm-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuilhermeAranega/farm-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GuilhermeAranega/farm-backend/issues"
+  },
+  "homepage": "https://github.com/GuilhermeAranega/farm-backend#readme",
+  "description": "",
+  "dependencies": {
+    "fastify": "^5.2.1",
+    "fastify-type-provider-zod": "^4.0.2",
+    "resend": "^4.1.2",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "prisma": "^6.3.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
