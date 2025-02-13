@@ -14,8 +14,8 @@ CREATE TABLE `environmental_data` (
 CREATE TABLE `energy_metrics` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `timestamp` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `solar_power` INTEGER NOT NULL,
-    `battery_voltage` INTEGER NOT NULL,
+    `solar_power` DOUBLE NOT NULL,
+    `battery_voltage` DOUBLE NOT NULL,
     `battery_charge` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -28,6 +28,10 @@ CREATE TABLE `water_pump_log` (
     `start_time` DATETIME(3) NOT NULL,
     `end_time` DATETIME(3) NOT NULL,
     `flow_rate` DOUBLE NOT NULL,
+    `environmentalDataId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `water_pump_log` ADD CONSTRAINT `water_pump_log_environmentalDataId_fkey` FOREIGN KEY (`environmentalDataId`) REFERENCES `environmental_data`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

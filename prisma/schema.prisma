@@ -14,12 +14,13 @@ datasource db {
 }
 
 model EnvironmentalData {
-  id             Int      @id @default(autoincrement())
-  timestamp      DateTime @default(now())
-  soilMoisture   Int      @map("soil_moisture")
-  airTemperature Float    @map("air_temperature")
-  airHumidity    Float    @map("air_humidity")
-  lightIntensity Float    @map("light_intensity")
+  id             Int            @id @default(autoincrement())
+  timestamp      DateTime       @default(now())
+  soilMoisture   Int            @map("soil_moisture")
+  airTemperature Float          @map("air_temperature")
+  airHumidity    Float          @map("air_humidity")
+  lightIntensity Float          @map("light_intensity")
+  WaterPumpLog   WaterPumpLog[]
 
   @@map("environmental_data")
 }
@@ -27,19 +28,21 @@ model EnvironmentalData {
 model EnergyMetric {
   id             Int      @id @default(autoincrement())
   timestamp      DateTime @default(now())
-  solarPower     Int      @map("solar_power")
-  batteryVoltage Int      @map("battery_voltage")
+  solarPower     Float    @map("solar_power")
+  batteryVoltage Float    @map("battery_voltage")
   batteryCharge  Int      @map("battery_charge")
 
   @@map("energy_metrics")
 }
 
 model WaterPumpLog {
-  id        Int      @id @default(autoincrement())
-  timestamp DateTime @default(now())
-  startTime DateTime @map("start_time")
-  endTime   DateTime @map("end_time")
-  flowRate  Float    @map("flow_rate")
+  id                  Int                @id @default(autoincrement())
+  timestamp           DateTime           @default(now())
+  startTime           DateTime           @map("start_time")
+  endTime             DateTime           @map("end_time")
+  flowRate            Float              @map("flow_rate")
+  environmental       EnvironmentalData? @relation(fields: [environmentalDataId], references: [id])
+  environmentalDataId Int?
 
   @@map("water_pump_log")
 }
