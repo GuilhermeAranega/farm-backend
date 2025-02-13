@@ -18,6 +18,7 @@
   "homepage": "https://github.com/GuilhermeAranega/farm-backend#readme",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^6.3.1",
     "fastify": "^5.2.1",
     "fastify-type-provider-zod": "^4.0.2",
     "resend": "^4.1.2",
