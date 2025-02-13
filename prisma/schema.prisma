@@ -14,13 +14,18 @@ datasource db {
 }
 
 model EnvironmentalData {
-  id             Int            @id @default(autoincrement())
-  timestamp      DateTime       @default(now())
-  soilMoisture   Int            @map("soil_moisture")
-  airTemperature Float          @map("air_temperature")
-  airHumidity    Float          @map("air_humidity")
-  lightIntensity Float          @map("light_intensity")
-  WaterPumpLog   WaterPumpLog[]
+  id             Int      @id @default(autoincrement())
+  timestamp      DateTime @default(now())
+  soilMoisture   Int      @map("soil_moisture")
+  airTemperature Float    @map("air_temperature")
+  airHumidity    Float    @map("air_humidity")
+  lightIntensity Float    @map("light_intensity")
+
+  avgSoilMoisture   Float?         @map("avg_soil_moisture")
+  avgAirTemp        Float?         @map("avg_air_temp")
+  avgAirHumidity    Float?         @map("avg_air_humidity")
+  avgLightIntensity Float?         @map("avg_light_intensity")
+  WaterPumpLog      WaterPumpLog[]
 
   @@map("environmental_data")
 }
@@ -31,6 +36,10 @@ model EnergyMetric {
   solarPower     Float    @map("solar_power")
   batteryVoltage Float    @map("battery_voltage")
   batteryCharge  Int      @map("battery_charge")
+
+  avgSolarPower     Float? @map("avg_solar_power")
+  avgBatteryVoltage Float? @map("avg_battery_voltage")
+  avgBatteryCharge  Float? @map("avg_battery_charge")
 
   @@map("energy_metrics")
 }

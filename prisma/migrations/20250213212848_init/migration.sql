@@ -6,6 +6,10 @@ CREATE TABLE `environmental_data` (
     `air_temperature` DOUBLE NOT NULL,
     `air_humidity` DOUBLE NOT NULL,
     `light_intensity` DOUBLE NOT NULL,
+    `avg_soil_moisture` DOUBLE NULL,
+    `avg_air_temp` DOUBLE NULL,
+    `avg_air_humidity` DOUBLE NULL,
+    `avg_light_intensity` DOUBLE NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -17,6 +21,9 @@ CREATE TABLE `energy_metrics` (
     `solar_power` DOUBLE NOT NULL,
     `battery_voltage` DOUBLE NOT NULL,
     `battery_charge` INTEGER NOT NULL,
+    `avg_solar_power` DOUBLE NULL,
+    `avg_battery_voltage` DOUBLE NULL,
+    `avg_battery_charge` DOUBLE NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
