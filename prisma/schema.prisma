@@ -21,11 +21,13 @@ model EnvironmentalData {
   airHumidity    Float    @map("air_humidity")
   lightIntensity Float    @map("light_intensity")
 
-  avgSoilMoisture   Float?         @map("avg_soil_moisture")
-  avgAirTemp        Float?         @map("avg_air_temp")
-  avgAirHumidity    Float?         @map("avg_air_humidity")
-  avgLightIntensity Float?         @map("avg_light_intensity")
-  WaterPumpLog      WaterPumpLog[]
+  avgSoilMoisture   Float? @map("avg_soil_moisture")
+  avgAirTemp        Float? @map("avg_air_temp")
+  avgAirHumidity    Float? @map("avg_air_humidity")
+  avgLightIntensity Float? @map("avg_light_intensity")
+
+  totalEntries Int            @default(1) @map("total_entries")
+  WaterPumpLog WaterPumpLog[]
 
   @@map("environmental_data")
 }
@@ -40,6 +42,8 @@ model EnergyMetric {
   avgSolarPower     Float? @map("avg_solar_power")
   avgBatteryVoltage Float? @map("avg_battery_voltage")
   avgBatteryCharge  Float? @map("avg_battery_charge")
+
+  totalEntries Int @default(1) @map("total_entries")
 
   @@map("energy_metrics")
 }
