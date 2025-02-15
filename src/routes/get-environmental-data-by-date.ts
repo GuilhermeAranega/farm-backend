@@ -1,0 +1,55 @@
+import { prisma } from "../lib/prisma";
+import { FastifyInstance } from "fastify";
+import { z } from "zod";
+
+export async function getEnvironmentalDataByDate(app: FastifyInstance) {
+  app.get(
+    "/environmental-data/:timestamp",
+    {
+      schema: {
+        params: z.object({
+          timestamp: z.string().datetime(),
+        }),
+        response: {
+          201: z.object({
+            message: z.string(),
+            status: z.boolean(),
+            environmentalData: z.object({
+              airHumidity: z.number(),
+              airTemperature: z.number(),
+              lightIntensity: z.number(),
+              soilMoisture: z.number(),
+              timestamp: z.date(),
+            }),
+          }),
+        },
+      },
+    },
+    async (req, res) => {
+      const { timestamp } = req.params;
+
+      const environmentalData = await prisma.environmentalData.findUnique({
+        where: {
+          timestamp: new Date(timestamp),
+        },
+        select: {
+          airHumidity: true,
+          airTemperature: true,
+          lightIntensity: true,
+          soilMoisture: true,
+          timestamp: true,
+        },
+      });
+
+      if (!environmentalData) {
+        throw new Error("Environmental data not found");
+      }
+
+      return res.status(201).send({
+        message: "Found environmental data",
+        status: true,
+        environmentalData,
+      });
+    }
+  );
+}

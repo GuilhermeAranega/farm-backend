@@ -15,7 +15,7 @@ datasource db {
 
 model EnvironmentalData {
   id             Int      @id @default(autoincrement())
-  timestamp      DateTime @default(now())
+  timestamp      DateTime @unique @default(now())
   soilMoisture   Int      @map("soil_moisture")
   airTemperature Float    @map("air_temperature")
   airHumidity    Float    @map("air_humidity")
@@ -34,7 +34,7 @@ model EnvironmentalData {
 
 model EnergyMetric {
   id             Int      @id @default(autoincrement())
-  timestamp      DateTime @default(now())
+  timestamp      DateTime @unique @default(now())
   solarPower     Float    @map("solar_power")
   batteryVoltage Float    @map("battery_voltage")
   batteryCharge  Int      @map("battery_charge")
