@@ -47,7 +47,7 @@ export async function getEnvironmentalDataByDate(app: FastifyInstance) {
         throw new Error("Environmental data not found");
       }
 
-      return res.status(201).send({
+      return res.status(200).send({
         message: "Found environmental data",
         status: true,
         environmentalData: {

@@ -35,7 +35,7 @@ export async function getAllEnvironmentalData(app: FastifyInstance) {
           totalEntries: true,
         },
       });
-      return res.status(201).send({
+      return res.status(200).send({
         message: "Found environmental data",
         status: true,
         averageEnvironmentalData,
