@@ -7,7 +7,14 @@ import {
   ZodTypeProvider,
 } from "fastify-type-provider-zod";
 
+// ? Routes
+import { getAllEnvironmentalData } from "./routes/get-all-environmental-data";
+
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
+
+app.register(getAllEnvironmentalData);
 
 const PORT = parseInt(process.env.PORT || "3333");
 
