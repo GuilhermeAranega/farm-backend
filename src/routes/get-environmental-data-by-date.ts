@@ -1,9 +1,10 @@
+import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { prisma } from "../lib/prisma";
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
 
 export async function getEnvironmentalDataByDate(app: FastifyInstance) {
-  app.get(
+  app.withTypeProvider<ZodTypeProvider>().get(
     "/environmental-data/:timestamp",
     {
       schema: {
