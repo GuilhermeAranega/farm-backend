@@ -1,0 +1,20 @@
+-- CreateTable
+CREATE TABLE `notifications` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `timestamp` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `message` VARCHAR(191) NOT NULL,
+    `type` ENUM('ALERT', 'WARNING', 'INFO') NOT NULL,
+    `isRead` BOOLEAN NOT NULL DEFAULT false,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `reports` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `timestamp` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `status` ENUM('PENDENTE', 'COMPLETO', 'ERRO') NOT NULL DEFAULT 'PENDENTE',
+    `file_path` VARCHAR(191) NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

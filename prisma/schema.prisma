@@ -59,3 +59,34 @@ model WaterPumpLog {
 
   @@map("water_pump_log")
 }
+
+model Notification {
+  id        Int       @id @default(autoincrement())
+  timestamp DateTime  @default(now())
+  message   String
+  type      NotifType
+  isRead    Boolean   @default(false)
+
+  @@map("notifications")
+}
+
+enum NotifType {
+  ALERT
+  WARNING
+  INFO
+}
+
+enum ReportStatus {
+  PENDENTE
+  COMPLETO
+  ERRO
+}
+
+model Report {
+  id        Int          @id @default(autoincrement())
+  timestamp DateTime     @default(now())
+  status    ReportStatus @default(PENDENTE)
+  filePath  String?      @map("file_path")
+
+  @@map("reports")
+}
