@@ -16,11 +16,19 @@ export async function getEnvironmentalDataByDate(app: FastifyInstance) {
             message: z.string(),
             status: z.boolean(),
             environmentalData: z.object({
+              id: z.number(),
+              timestamp: z.date(),
               airHumidity: z.number(),
               airTemperature: z.number(),
               lightIntensity: z.number(),
               soilMoisture: z.number(),
-              timestamp: z.date(),
+              averageData: z.object({
+                avgAirHumidity: z.number().nullable(),
+                avgAirTemp: z.number().nullable(),
+                avgLightIntensity: z.number().nullable(),
+                avgSoilMoisture: z.number().nullable(),
+              }),
+              totalEntries: z.number(),
             }),
           }),
         },
@@ -33,13 +41,6 @@ export async function getEnvironmentalDataByDate(app: FastifyInstance) {
         where: {
           timestamp: new Date(timestamp),
         },
-        select: {
-          airHumidity: true,
-          airTemperature: true,
-          lightIntensity: true,
-          soilMoisture: true,
-          timestamp: true,
-        },
       });
 
       if (!environmentalData) {
@@ -49,7 +50,15 @@ export async function getEnvironmentalDataByDate(app: FastifyInstance) {
       return res.status(201).send({
         message: "Found environmental data",
         status: true,
-        environmentalData,
+        environmentalData: {
+          ...environmentalData,
+          averageData: {
+            avgAirHumidity: environmentalData.avgAirHumidity,
+            avgAirTemp: environmentalData.avgAirTemp,
+            avgLightIntensity: environmentalData.avgLightIntensity,
+            avgSoilMoisture: environmentalData.avgSoilMoisture,
+          },
+        },
       });
     }
   );
