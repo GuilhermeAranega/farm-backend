@@ -36,10 +36,12 @@ export async function getAllEnvironmentalData(app: FastifyInstance) {
     },
     async (req, res) => {
       const sevenDaysAgo = subDays(new Date(), 7);
+
       const environmentalData = await prisma.environmentalData.findMany({
         where: { timestamp: { gte: sevenDaysAgo } },
         orderBy: { timestamp: "desc" },
       });
+
       return res.status(200).send({
         message: "Found environmental data",
         status: true,
