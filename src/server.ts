@@ -12,6 +12,7 @@ import { getAllEnvironmentalData } from "./routes/get-all-environmental-data";
 import { getEnvironmentalDataByDate } from "./routes/get-environmental-data-by-date";
 import { getNotifications } from "./routes/get-notifications";
 import { readNotification } from "./routes/read-notification";
+import { hasUnreadNotifications } from "./routes/has-unread-notifications";
 import { generateReport } from "./routes/generate-report";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -23,6 +24,7 @@ app.register(getEnvironmentalDataByDate);
 
 app.register(getNotifications);
 app.register(readNotification);
+app.register(hasUnreadNotifications);
 
 app.register(generateReport);
 
