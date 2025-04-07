@@ -5,11 +5,11 @@ import { z } from "zod";
 
 export async function getAllEnvironmentalData(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
-    "/environmental-data",
+    "/environmentalmetrics",
     {
       schema: {
         response: {
-          201: z.object({
+          200: z.object({
             message: z.string(),
             status: z.boolean(),
             averageEnvironmentalData: z.array(
