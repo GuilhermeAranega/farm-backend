@@ -18,6 +18,7 @@ export async function getNotifications(app: FastifyInstance) {
                 type: z.string(),
                 message: z.string(),
                 timestamp: z.date(),
+                isRead: z.boolean(),
               })
             ),
           }),
