@@ -31,6 +31,10 @@ export async function getAllEnvironmentalMetrics(app: FastifyInstance) {
               })
             ),
           }),
+          400: z.object({
+            message: z.string(),
+            status: z.boolean(),
+          }),
         },
       },
     },
@@ -41,6 +45,13 @@ export async function getAllEnvironmentalMetrics(app: FastifyInstance) {
         where: { timestamp: { gte: sevenDaysAgo } },
         orderBy: { timestamp: "desc" },
       });
+
+      if (environmentalData.length == 0) {
+        return res.status(400).send({
+          message: "Environmental data not found",
+          status: false,
+        });
+      }
 
       return res.status(200).send({
         message: "Found environmental data",
