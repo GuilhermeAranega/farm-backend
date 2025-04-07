@@ -4,7 +4,7 @@ import { prisma } from "../lib/prisma";
 import { z } from "zod";
 
 export async function readNotification(app: FastifyInstance) {
-  app.withTypeProvider<ZodTypeProvider>().put(
+  app.withTypeProvider<ZodTypeProvider>().patch(
     "/notifications/:id",
     {
       schema: {

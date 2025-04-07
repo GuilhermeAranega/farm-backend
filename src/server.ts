@@ -19,7 +19,7 @@ import { generateReport } from "./routes/generate-report";
 import { getAllEnergyMetrics } from "./routes/get-all-energy-metrics";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
-app.register(cors, { origin: "*" });
+app.register(cors, { origin: "*", methods: ["GET", "POST", "PATCH"] });
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
