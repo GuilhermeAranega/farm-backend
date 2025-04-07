@@ -29,6 +29,10 @@ export async function getAllEnergyMetrics(app: FastifyInstance) {
               })
             ),
           }),
+          400: z.object({
+            message: z.string(),
+            status: z.boolean(),
+          }),
         },
       },
     },
@@ -39,6 +43,13 @@ export async function getAllEnergyMetrics(app: FastifyInstance) {
         where: { timestamp: { gte: sevenDaysAgo } },
         orderBy: { timestamp: "desc" },
       });
+
+      if (energyMetrics.length == 0) {
+        return res.status(400).send({
+          message: "Energy data not found",
+          status: false,
+        });
+      }
 
       return res.status(200).send({
         message: "Found energy data",
