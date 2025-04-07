@@ -14,6 +14,7 @@ import { getNotifications } from "./routes/get-notifications";
 import { readNotification } from "./routes/read-notification";
 import { hasUnreadNotifications } from "./routes/has-unread-notifications";
 import { generateReport } from "./routes/generate-report";
+import { getAllEnergyMetrics } from "./routes/get-all-energy-metrics";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 app.setValidatorCompiler(validatorCompiler);
@@ -21,6 +22,8 @@ app.setSerializerCompiler(serializerCompiler);
 
 app.register(getAllEnvironmentalMetrics);
 app.register(getEnvironmentalMetricByDate);
+
+app.register(getAllEnergyMetrics);
 
 app.register(getNotifications);
 app.register(readNotification);

@@ -4,9 +4,9 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { subDays } from "date-fns";
 
-export async function getAllEnvironmentalData(app: FastifyInstance) {
+export async function getAllEnergyMetrics(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
-    "/environmentalmetrics",
+    "/energymetrics",
     {
       schema: {
         response: {
@@ -14,17 +14,15 @@ export async function getAllEnvironmentalData(app: FastifyInstance) {
             message: z.string(),
             status: z.boolean(),
 
-            environmentalData: z.array(
+            energyMetrics: z.array(
               z.object({
-                soilMoisture: z.number(),
-                airTemperature: z.number(),
-                airHumidity: z.number(),
-                lightIntensity: z.number(),
+                solarPower: z.number(),
+                batteryVoltage: z.number(),
+                batteryCharge: z.number(),
 
-                avgAirHumidity: z.number().nullable(),
-                avgAirTemp: z.number().nullable(),
-                avgLightIntensity: z.number().nullable(),
-                avgSoilMoisture: z.number().nullable(),
+                avgSolarPower: z.number().nullable(),
+                avgBatteryVoltage: z.number().nullable(),
+                avgBatteryCharge: z.number().nullable(),
                 totalEntries: z.number().nullable(),
 
                 timestamp: z.date(),
@@ -37,7 +35,7 @@ export async function getAllEnvironmentalData(app: FastifyInstance) {
     async (req, res) => {
       const sevenDaysAgo = subDays(new Date(), 7);
 
-      const environmentalData = await prisma.environmentalData.findMany({
+      const energyMetrics = await prisma.energyMetric.findMany({
         where: { timestamp: { gte: sevenDaysAgo } },
         orderBy: { timestamp: "desc" },
       });
@@ -45,7 +43,7 @@ export async function getAllEnvironmentalData(app: FastifyInstance) {
       return res.status(200).send({
         message: "Found environmental data",
         status: true,
-        environmentalData,
+        energyMetrics,
       });
     }
   );
