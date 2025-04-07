@@ -7,6 +7,8 @@ import {
   ZodTypeProvider,
 } from "fastify-type-provider-zod";
 
+import cors from "@fastify/cors";
+
 // ? Routes
 import { getAllEnvironmentalMetrics } from "./routes/get-all-environmental-metrics";
 import { getEnvironmentalMetricByDate } from "./routes/get-environmental-metric-by-date";
@@ -17,6 +19,8 @@ import { generateReport } from "./routes/generate-report";
 import { getAllEnergyMetrics } from "./routes/get-all-energy-metrics";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
+app.register(cors, { origin: "*" });
+
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 

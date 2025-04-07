@@ -22,6 +22,7 @@
   "homepage": "https://github.com/GuilhermeAranega/farm-backend#readme",
   "description": "",
   "dependencies": {
+    "@fastify/cors": "^11.0.1",
     "@prisma/client": "^6.3.1",
     "amqplib": "^0.10.5",
     "date-fns": "^4.1.0",
