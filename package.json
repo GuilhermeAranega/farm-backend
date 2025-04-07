@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch --env-file .env.local src/server.ts"
+    "dev": "tsx watch --env-file .env.local src/server.ts",
+    "build": "tsc",
+    "start": "node /dist/server.js",
+    "worker:notifications": "tsx watch src/workers/notification-worker.ts",
+    "worker:reports": "tsx watch src/workers/report-worker.ts"
   },
   "repository": {
     "type": "git",
