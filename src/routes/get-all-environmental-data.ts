@@ -14,13 +14,20 @@ export async function getAllEnvironmentalData(app: FastifyInstance) {
             message: z.string(),
             status: z.boolean(),
 
-            averageEnvironmentalData: z.array(
+            environmentalData: z.array(
               z.object({
+                soilMoisture: z.number(),
+                airTemperature: z.number(),
+                airHumidity: z.number(),
+                lightIntensity: z.number(),
+
                 avgAirHumidity: z.number().nullable(),
                 avgAirTemp: z.number().nullable(),
                 avgLightIntensity: z.number().nullable(),
                 avgSoilMoisture: z.number().nullable(),
                 totalEntries: z.number().nullable(),
+
+                timestamp: z.date(),
               })
             ),
           }),
@@ -29,14 +36,14 @@ export async function getAllEnvironmentalData(app: FastifyInstance) {
     },
     async (req, res) => {
       const sevenDaysAgo = subDays(new Date(), 7);
-      const averageEnvironmentalData = await prisma.environmentalData.findMany({
+      const environmentalData = await prisma.environmentalData.findMany({
         where: { timestamp: { gte: sevenDaysAgo } },
         orderBy: { timestamp: "desc" },
       });
       return res.status(200).send({
         message: "Found environmental data",
         status: true,
-        averageEnvironmentalData,
+        environmentalData,
       });
     }
   );
