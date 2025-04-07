@@ -41,7 +41,7 @@ export async function getAllEnergyMetrics(app: FastifyInstance) {
       });
 
       return res.status(200).send({
-        message: "Found environmental data",
+        message: "Found energy data",
         status: true,
         energyMetrics,
       });
