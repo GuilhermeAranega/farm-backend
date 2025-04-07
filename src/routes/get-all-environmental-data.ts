@@ -2,6 +2,7 @@ import { prisma } from "../lib/prisma";
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
+import { subDays } from "date-fns";
 
 export async function getAllEnvironmentalData(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -12,6 +13,7 @@ export async function getAllEnvironmentalData(app: FastifyInstance) {
           200: z.object({
             message: z.string(),
             status: z.boolean(),
+
             averageEnvironmentalData: z.array(
               z.object({
                 avgAirHumidity: z.number().nullable(),
@@ -26,14 +28,10 @@ export async function getAllEnvironmentalData(app: FastifyInstance) {
       },
     },
     async (req, res) => {
+      const sevenDaysAgo = subDays(new Date(), 7);
       const averageEnvironmentalData = await prisma.environmentalData.findMany({
-        select: {
-          avgAirHumidity: true,
-          avgAirTemp: true,
-          avgLightIntensity: true,
-          avgSoilMoisture: true,
-          totalEntries: true,
-        },
+        where: { timestamp: { gte: sevenDaysAgo } },
+        orderBy: { timestamp: "desc" },
       });
       return res.status(200).send({
         message: "Found environmental data",
