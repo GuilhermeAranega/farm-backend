@@ -5,7 +5,7 @@ import { connectRabbitMQ } from "../services/rabbitmq";
 
 const prisma = new PrismaClient();
 
-async function startReportWorker() {
+export async function startReportWorker() {
   console.log("🚀 report worker started");
 
   const channel = await connectRabbitMQ();
@@ -69,5 +69,3 @@ async function startReportWorker() {
     }
   );
 }
-
-startReportWorker();
