@@ -17,6 +17,7 @@ import { readNotification } from "./routes/read-notification";
 import { hasUnreadNotifications } from "./routes/has-unread-notifications";
 import { generateReport } from "./routes/generate-report";
 import { getAllEnergyMetrics } from "./routes/get-all-energy-metrics";
+import { readAllNotifications } from "./routes/read-all-notifications";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 app.register(cors, { origin: "*", methods: ["GET", "POST", "PATCH"] });
@@ -32,6 +33,7 @@ app.register(getAllEnergyMetrics);
 app.register(getNotifications);
 app.register(readNotification);
 app.register(hasUnreadNotifications);
+app.register(readAllNotifications);
 
 app.register(generateReport);
 
