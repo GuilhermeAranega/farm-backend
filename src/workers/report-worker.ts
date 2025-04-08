@@ -44,7 +44,11 @@ async function startReportWorker() {
           data: { status: ReportStatus.COMPLETO, filePath: pdfPath },
         });
 
-        sendNotification("INFO", "📄 Seu relatório está pronto para download!");
+        sendNotification(
+          "INFO",
+          "📄 Seu relatório está pronto para download!",
+          "new-notification"
+        );
 
         channel.ack(msg);
       } catch (error) {
@@ -55,7 +59,11 @@ async function startReportWorker() {
           data: { status: ReportStatus.ERRO },
         });
 
-        sendNotification("ERRO", "❌ Erro ao gerar o relatório");
+        sendNotification(
+          "ERRO",
+          "❌ Erro ao gerar o relatório",
+          "report-error"
+        );
         channel.ack(msg);
       }
     }

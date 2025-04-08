@@ -4,7 +4,7 @@ import { broadcastNotification } from "../services/websocket";
 
 const prisma = new PrismaClient();
 
-async function startNotificationWorker() {
+export async function startNotificationWorker() {
   const channel = await connectRabbitMQ();
   await channel.assertQueue("notifications", { durable: true });
   console.log("🚀 notification worker started");
@@ -14,18 +14,16 @@ async function startNotificationWorker() {
     async (msg: { content: { toString: () => string } }) => {
       if (!msg) return;
 
-      const { type, message } = JSON.parse(msg.content.toString());
-      console.log(`🔔 new notification: ${type} - ${message}`);
+      const { type, message, wsType } = JSON.parse(msg.content.toString());
+      console.log(`🔔 new notification: ${type} - ${message} - ${wsType}`);
 
       await prisma.notification.create({
         data: { type, message },
       });
 
-      broadcastNotification({ type, message });
+      broadcastNotification({ type, message, wsType });
 
       channel.ack(msg);
     }
   );
 }
-
-startNotificationWorker();
