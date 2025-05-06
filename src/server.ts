@@ -20,6 +20,8 @@ import { hasUnreadNotifications } from "./routes/has-unread-notifications";
 import { generateReport } from "./routes/generate-report";
 import { getAllEnergyMetrics } from "./routes/get-all-energy-metrics";
 import { readAllNotifications } from "./routes/read-all-notifications";
+import { controlPump } from "./routes/control-pump";
+
 import { startNotificationWorker } from "./workers/notification-worker";
 import { startReportWorker } from "./workers/report-worker";
 
@@ -48,6 +50,8 @@ app.register(hasUnreadNotifications);
 app.register(readAllNotifications);
 
 app.register(generateReport);
+
+app.register(controlPump);
 
 const PORT = parseInt(process.env.PORT || "3333");
 
