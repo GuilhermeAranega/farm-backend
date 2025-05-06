@@ -23,6 +23,9 @@ import { readAllNotifications } from "./routes/read-all-notifications";
 import { startNotificationWorker } from "./workers/notification-worker";
 import { startReportWorker } from "./workers/report-worker";
 
+import "./services/mqtt-broker";
+import "./services/mqtt-subscriber";
+
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 app.register(cors, { origin: "*", methods: ["GET", "POST", "PATCH"] });
 const httpServer = createServer((req, res) => {
@@ -50,7 +53,7 @@ const PORT = parseInt(process.env.PORT || "3333");
 
 const start = async () => {
   try {
-    await app.ready(); // garante que tudo está registrado
+    await app.ready();
     httpServer.listen(PORT, () => {
       console.log("🚀 Servidor rodando em http://localhost:3333");
     });
