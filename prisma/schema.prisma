@@ -10,59 +10,43 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model EnvironmentalData {
-  id             Int      @id @default(autoincrement())
+  id             String   @id @default(cuid()) @map("_id")
   timestamp      DateTime @unique @default(now())
   soilMoisture   Int      @map("soil_moisture")
   airTemperature Float    @map("air_temperature")
   airHumidity    Float    @map("air_humidity")
   lightIntensity Float    @map("light_intensity")
 
-  avgSoilMoisture   Float? @map("avg_soil_moisture")
-  avgAirTemp        Float? @map("avg_air_temp")
-  avgAirHumidity    Float? @map("avg_air_humidity")
-  avgLightIntensity Float? @map("avg_light_intensity")
-
-  totalEntries Int            @default(1) @map("total_entries")
-  WaterPumpLog WaterPumpLog[]
-
   @@map("environmental_data")
 }
 
 model EnergyMetric {
-  id             Int      @id @default(autoincrement())
+  id             String   @id @default(cuid()) @map("_id")
   timestamp      DateTime @unique @default(now())
   solarPower     Float    @map("solar_power")
   batteryVoltage Float    @map("battery_voltage")
   batteryCharge  Int      @map("battery_charge")
 
-  avgSolarPower     Float? @map("avg_solar_power")
-  avgBatteryVoltage Float? @map("avg_battery_voltage")
-  avgBatteryCharge  Float? @map("avg_battery_charge")
-
-  totalEntries Int @default(1) @map("total_entries")
-
   @@map("energy_metrics")
 }
 
 model WaterPumpLog {
-  id                  Int                @id @default(autoincrement())
-  timestamp           DateTime           @default(now())
-  startTime           DateTime           @map("start_time")
-  endTime             DateTime           @map("end_time")
-  flowRate            Float              @map("flow_rate")
-  environmental       EnvironmentalData? @relation(fields: [environmentalDataId], references: [id])
-  environmentalDataId Int?
+  id        String   @id @default(cuid()) @map("_id")
+  timestamp DateTime @default(now())
+  startTime DateTime @map("start_time")
+  endTime   DateTime @map("end_time")
+  flowRate  Float    @map("flow_rate")
 
   @@map("water_pump_log")
 }
 
 model Notification {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(cuid()) @map("_id")
   timestamp DateTime  @default(now())
   message   String
   type      NotifType
@@ -84,7 +68,7 @@ enum ReportStatus {
 }
 
 model Report {
-  id        Int          @id @default(autoincrement())
+  id        String       @id @default(cuid()) @map("_id")
   timestamp DateTime     @default(now())
   status    ReportStatus @default(PENDENTE)
   filePath  String?      @map("file_path")
