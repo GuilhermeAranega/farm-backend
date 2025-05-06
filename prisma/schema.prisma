@@ -21,6 +21,7 @@ model EnvironmentalData {
   airTemperature Float    @map("air_temperature")
   airHumidity    Float    @map("air_humidity")
   lightIntensity Float    @map("light_intensity")
+  deviceId       Int      @map("device_id")
 
   @@map("environmental_data")
 }
@@ -31,6 +32,7 @@ model EnergyMetric {
   solarPower     Float    @map("solar_power")
   batteryVoltage Float    @map("battery_voltage")
   batteryCharge  Int      @map("battery_charge")
+  deviceId       Int      @map("device_id")
 
   @@map("energy_metrics")
 }
