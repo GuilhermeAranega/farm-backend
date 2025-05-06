@@ -17,7 +17,7 @@ export async function generateReport(app: FastifyInstance) {
           201: z.object({
             message: z.string(),
             status: z.boolean(),
-            reportId: z.number(),
+            reportId: z.string(),
           }),
         },
       },

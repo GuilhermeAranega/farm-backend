@@ -20,11 +20,6 @@ export async function getAllEnergyMetrics(app: FastifyInstance) {
                 batteryVoltage: z.number(),
                 batteryCharge: z.number(),
 
-                avgSolarPower: z.number().nullable(),
-                avgBatteryVoltage: z.number().nullable(),
-                avgBatteryCharge: z.number().nullable(),
-                totalEntries: z.number().nullable(),
-
                 timestamp: z.date(),
               })
             ),

@@ -21,12 +21,6 @@ export async function getAllEnvironmentalMetrics(app: FastifyInstance) {
                 airHumidity: z.number(),
                 lightIntensity: z.number(),
 
-                avgAirHumidity: z.number().nullable(),
-                avgAirTemp: z.number().nullable(),
-                avgLightIntensity: z.number().nullable(),
-                avgSoilMoisture: z.number().nullable(),
-                totalEntries: z.number().nullable(),
-
                 timestamp: z.date(),
               })
             ),

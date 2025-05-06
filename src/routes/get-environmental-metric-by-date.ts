@@ -16,19 +16,12 @@ export async function getEnvironmentalMetricByDate(app: FastifyInstance) {
             message: z.string(),
             status: z.boolean(),
             environmentalData: z.object({
-              id: z.number(),
+              id: z.string(),
               timestamp: z.date(),
               airHumidity: z.number(),
               airTemperature: z.number(),
               lightIntensity: z.number(),
               soilMoisture: z.number(),
-              averageData: z.object({
-                avgAirHumidity: z.number().nullable(),
-                avgAirTemp: z.number().nullable(),
-                avgLightIntensity: z.number().nullable(),
-                avgSoilMoisture: z.number().nullable(),
-              }),
-              totalEntries: z.number(),
             }),
           }),
         },
@@ -50,15 +43,7 @@ export async function getEnvironmentalMetricByDate(app: FastifyInstance) {
       return res.status(200).send({
         message: "Found environmental data",
         status: true,
-        environmentalData: {
-          ...environmentalData,
-          averageData: {
-            avgAirHumidity: environmentalData.avgAirHumidity,
-            avgAirTemp: environmentalData.avgAirTemp,
-            avgLightIntensity: environmentalData.avgLightIntensity,
-            avgSoilMoisture: environmentalData.avgSoilMoisture,
-          },
-        },
+        environmentalData,
       });
     }
   );

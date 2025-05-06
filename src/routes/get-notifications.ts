@@ -14,7 +14,7 @@ export async function getNotifications(app: FastifyInstance) {
             status: z.boolean(),
             notifications: z.array(
               z.object({
-                id: z.number(),
+                id: z.string(),
                 type: z.string(),
                 message: z.string(),
                 timestamp: z.date(),

@@ -9,14 +9,14 @@ export async function readNotification(app: FastifyInstance) {
     {
       schema: {
         params: z.object({
-          id: z.coerce.number(),
+          id: z.string(),
         }),
         response: {
           200: z.object({
             message: z.string(),
             status: z.boolean(),
             notification: z.object({
-              id: z.number(),
+              id: z.string(),
               message: z.string(),
               timestamp: z.date(),
               isRead: z.boolean(),
