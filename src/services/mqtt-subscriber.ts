@@ -34,6 +34,7 @@ client.on("message", async (topic, message) => {
         airHumidity: payload.airHumidity,
         lightIntensity: payload.lightIntensity,
         timestamp: readAt,
+        deviceId: payload.deviceId,
       },
     });
   }
@@ -45,6 +46,7 @@ client.on("message", async (topic, message) => {
         batteryVoltage: payload.batteryVoltage,
         batteryCharge: payload.batteryCharge,
         timestamp: readAt,
+        deviceId: payload.deviceId,
       },
     });
   }
