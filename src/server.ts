@@ -29,7 +29,10 @@ import "./services/mqtt-broker";
 import "./services/mqtt-subscriber";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
-app.register(cors, { origin: "*", methods: ["GET", "POST", "PATCH"] });
+app.register(cors, {
+  origin: "*",
+  methods: ["GET", "POST", "PATCH"],
+});
 const httpServer = createServer((req, res) => {
   app.server.emit("request", req, res);
 });
@@ -59,7 +62,7 @@ const start = async () => {
   try {
     await app.ready();
     httpServer.listen(PORT, () => {
-      console.log("🚀 Servidor rodando em http://localhost:3333");
+      console.log("🚀 Servidor rodando em http://localhost:" + PORT);
     });
   } catch (err) {
     console.error(err);
