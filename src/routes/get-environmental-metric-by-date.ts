@@ -12,7 +12,7 @@ export async function getEnvironmentalMetricByDate(app: FastifyInstance) {
           timestamp: z.string().datetime(),
         }),
         response: {
-          201: z.object({
+          200: z.object({
             message: z.string(),
             status: z.boolean(),
             environmentalData: z.object({
