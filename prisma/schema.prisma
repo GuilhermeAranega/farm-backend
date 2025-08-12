@@ -77,3 +77,23 @@ model Report {
 
   @@map("reports")
 }
+
+model User {
+  id           String         @id @default(cuid()) @map("_id")
+  username     String         @unique
+  passwordHash String
+  sessions     SessionToken[]
+
+  @@map("users")
+}
+
+model SessionToken {
+  id        String   @id @default(cuid()) @map("_id")
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@map("session_tokens")
+}
