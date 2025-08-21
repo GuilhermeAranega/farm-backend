@@ -2,6 +2,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { FastifyInstance } from "fastify";
 import { prisma } from "../lib/prisma";
 import { z } from "zod";
+import { authenticate } from "../hooks/authenticate";
 
 export async function getNotifications(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -24,6 +25,7 @@ export async function getNotifications(app: FastifyInstance) {
           }),
         },
       },
+      preHandler: [authenticate],
     },
     async (req, res) => {
       const notifications = await prisma.notification.findMany({

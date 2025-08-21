@@ -2,6 +2,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { FastifyInstance } from "fastify";
 import { prisma } from "../lib/prisma";
 import { z } from "zod";
+import { authenticate } from "../hooks/authenticate";
 
 export async function hasUnreadNotifications(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -16,6 +17,7 @@ export async function hasUnreadNotifications(app: FastifyInstance) {
           }),
         },
       },
+      preHandler: [authenticate],
     },
     async (req, res) => {
       const hasUnread = await prisma.notification.count({

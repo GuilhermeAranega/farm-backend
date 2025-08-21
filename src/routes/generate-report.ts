@@ -4,6 +4,7 @@ import { ReportStatus } from "@prisma/client";
 import { sendToQueue } from "../services/rabbitmq";
 import { z } from "zod";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
+import { authenticate } from "../hooks/authenticate";
 
 export async function generateReport(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -21,6 +22,7 @@ export async function generateReport(app: FastifyInstance) {
           }),
         },
       },
+      preHandler: [authenticate],
     },
     async (req, res) => {
       const { filterType } = req.body;

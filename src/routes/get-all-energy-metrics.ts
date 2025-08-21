@@ -3,6 +3,7 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
 import { subDays } from "date-fns";
+import { authenticate } from "../hooks/authenticate";
 
 export async function getAllEnergyMetrics(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -30,6 +31,7 @@ export async function getAllEnergyMetrics(app: FastifyInstance) {
           }),
         },
       },
+      preHandler: [authenticate],
     },
     async (req, res) => {
       const sevenDaysAgo = subDays(new Date(), 7);

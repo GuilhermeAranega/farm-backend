@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { z } from "zod";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { turnPumpOn, turnPumpOff } from "../services/pump-controller";
+import { authenticate } from "../hooks/authenticate";
 
 export async function controlPump(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -19,6 +20,7 @@ export async function controlPump(app: FastifyInstance) {
           }),
         },
       },
+      preHandler: [authenticate],
     },
     async (req, res) => {
       const { action, deviceId } = req.body;

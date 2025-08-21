@@ -2,6 +2,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { prisma } from "../lib/prisma";
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
+import { authenticate } from "../hooks/authenticate";
 
 export async function getEnvironmentalMetricByDate(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -26,6 +27,7 @@ export async function getEnvironmentalMetricByDate(app: FastifyInstance) {
           }),
         },
       },
+      preHandler: [authenticate],
     },
     async (req, res) => {
       const { timestamp } = req.params;

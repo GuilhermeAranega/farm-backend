@@ -27,11 +27,14 @@ import { startReportWorker } from "./workers/report-worker";
 
 import "./services/mqtt-broker";
 import "./services/mqtt-subscriber";
+import { createAccount } from "./routes/create-account";
+import { loginAccount } from "./routes/login-account";
+import { deleteAccount } from "./routes/delete-account";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 app.register(cors, {
   origin: "*",
-  methods: ["GET", "POST", "PATCH"],
+  methods: ["GET", "POST", "PATCH", "DELETE"],
 });
 const httpServer = createServer((req, res) => {
   app.server.emit("request", req, res);
@@ -55,6 +58,10 @@ app.register(readAllNotifications);
 app.register(generateReport);
 
 app.register(controlPump);
+
+app.register(createAccount);
+app.register(loginAccount);
+app.register(deleteAccount);
 
 const PORT = parseInt(process.env.PORT || "3333");
 
