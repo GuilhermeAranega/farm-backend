@@ -14,6 +14,8 @@ export async function loginAccount(app: FastifyInstance) {
         }),
         response: {
           200: z.object({
+            name: z.string(),
+            email: z.string().email(),
             message: z.string(),
             status: z.boolean(),
             accountId: z.string(),
@@ -40,6 +42,8 @@ export async function loginAccount(app: FastifyInstance) {
       const token = await createSession(user.id);
 
       return res.status(200).send({
+        name: user.username,
+        email: user.email,
         status: true,
         message: "Login successful",
         accountId: user.id,
