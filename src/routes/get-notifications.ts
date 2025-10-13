@@ -23,6 +23,10 @@ export async function getNotifications(app: FastifyInstance) {
               })
             ),
           }),
+          401: z.object({
+            message: z.string(),
+            status: z.boolean(),
+          }),
         },
       },
       preHandler: [authenticate],
@@ -33,6 +37,11 @@ export async function getNotifications(app: FastifyInstance) {
           timestamp: "desc",
         },
       });
+      if (notifications.length === 0) {
+        return res
+          .status(400)
+          .send({ message: "No notifications found", status: false });
+      }
 
       return res.status(200).send({
         message: "Found notifications",
