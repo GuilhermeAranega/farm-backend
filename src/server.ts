@@ -17,14 +17,12 @@ import { getEnvironmentalMetricByDate } from "./routes/get-environmental-metric-
 import { getNotifications } from "./routes/get-notifications";
 import { readNotification } from "./routes/read-notification";
 import { hasUnreadNotifications } from "./routes/has-unread-notifications";
-import { generateReport } from "./routes/generate-report";
 import { getAllEnergyMetrics } from "./routes/get-all-energy-metrics";
 import { readAllNotifications } from "./routes/read-all-notifications";
 import { controlPump } from "./routes/control-pump";
 import { getReportData } from "./routes/get-data-for-report";
 
 import { startNotificationWorker } from "./workers/notification-worker";
-import { startReportWorker } from "./workers/report-worker";
 
 import "./services/mqtt-broker";
 import "./services/mqtt-subscriber";
@@ -57,8 +55,6 @@ app.register(readNotification);
 app.register(hasUnreadNotifications);
 app.register(readAllNotifications);
 
-app.register(generateReport);
-
 app.register(controlPump);
 
 app.register(createAccount);
@@ -80,5 +76,4 @@ const start = async () => {
 };
 
 startNotificationWorker();
-startReportWorker();
 start();
