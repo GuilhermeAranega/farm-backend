@@ -21,6 +21,7 @@ import { getAllEnergyMetrics } from "./routes/get-all-energy-metrics";
 import { readAllNotifications } from "./routes/read-all-notifications";
 import { controlPump } from "./routes/control-pump";
 import { getReportData } from "./routes/get-data-for-report";
+import { changeTime } from "./routes/change-time";
 
 import { startNotificationWorker } from "./workers/notification-worker";
 
@@ -56,6 +57,7 @@ app.register(hasUnreadNotifications);
 app.register(readAllNotifications);
 
 app.register(controlPump);
+app.register(changeTime);
 
 app.register(createAccount);
 app.register(loginAccount);
