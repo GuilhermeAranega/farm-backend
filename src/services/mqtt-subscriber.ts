@@ -1,6 +1,7 @@
 import mqtt from "mqtt";
 import { prisma } from "../lib/prisma";
 import { sendNotification } from "./notifications";
+import { broadcastNotification } from "./websocket";
 
 const client = mqtt.connect("mqtt://localhost:1883");
 
@@ -8,9 +9,30 @@ client.on("connect", () => {
   console.log("✅ conectado ao broker MQTT");
   client.subscribe("sensor/environment");
   client.subscribe("sensor/energy");
+  client.subscribe("status/+");
 });
 
 client.on("message", async (topic, message) => {
+  if (topic.startsWith("status/")) {
+    const deviceId = parseInt(topic.split("/")[1]);
+
+    if (!isNaN(deviceId)) {
+      const msg = JSON.parse(message.toString());
+      await prisma.deviceStatus.upsert({
+        where: { deviceId },
+        update: { status: msg.status, lastUpdate: new Date() },
+        create: { deviceId, status: msg.status, lastUpdate: new Date() },
+      });
+
+      broadcastNotification({
+        type: "DEVICE_STATUS",
+        message: JSON.stringify({ deviceId, status: msg.status }),
+        wsType: "device-status",
+      });
+    }
+    return;
+  }
+
   const payload = JSON.parse(message.toString());
 
   const now = new Date();
