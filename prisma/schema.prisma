@@ -69,13 +69,11 @@ enum ReportStatus {
   ERRO
 }
 
-model Report {
-  id        String       @id @default(cuid()) @map("_id")
-  timestamp DateTime     @default(now())
-  status    ReportStatus @default(PENDENTE)
-  filePath  String?      @map("file_path")
-
-  @@map("reports")
+model DeviceStatus {
+  id         String   @id @default(cuid()) @map("_id")
+  deviceId   Int      @unique @map("device_id")
+  status     String
+  lastUpdate DateTime
 }
 
 model User {
