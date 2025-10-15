@@ -30,6 +30,8 @@ import "./services/mqtt-subscriber";
 import { createAccount } from "./routes/create-account";
 import { loginAccount } from "./routes/login-account";
 import { deleteAccount } from "./routes/delete-account";
+import { getDevices } from "./routes/get-devices";
+import { updateDeviceName } from "./routes/update-device-name";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 app.register(cors, {
@@ -57,7 +59,9 @@ app.register(hasUnreadNotifications);
 app.register(readAllNotifications);
 
 app.register(controlPump);
+app.register(getDevices);
 app.register(changeTime);
+app.register(updateDeviceName);
 
 app.register(createAccount);
 app.register(loginAccount);

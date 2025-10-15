@@ -18,10 +18,17 @@ client.on("message", async (topic, message) => {
 
     if (!isNaN(deviceId)) {
       const msg = JSON.parse(message.toString());
-      await prisma.deviceStatus.upsert({
+      const isOnline = msg.status === "true";
+
+      await prisma.device.upsert({
         where: { deviceId },
-        update: { status: msg.status, lastUpdate: new Date() },
-        create: { deviceId, status: msg.status, lastUpdate: new Date() },
+        update: { status: isOnline, lastUpdate: new Date() },
+        create: {
+          deviceId,
+          status: isOnline,
+          lastUpdate: new Date(),
+          name: `ESP-${deviceId}`,
+        },
       });
 
       broadcastNotification({
