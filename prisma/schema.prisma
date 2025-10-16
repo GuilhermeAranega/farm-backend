@@ -69,11 +69,14 @@ enum ReportStatus {
   ERRO
 }
 
-model DeviceStatus {
+model Device {
   id         String   @id @default(cuid()) @map("_id")
+  name       String
   deviceId   Int      @unique @map("device_id")
-  status     String
+  status     Boolean
   lastUpdate DateTime
+
+  @@map("devices")
 }
 
 model User {
