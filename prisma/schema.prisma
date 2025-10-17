@@ -85,6 +85,7 @@ model User {
   passwordHash String
   email        String         @unique
   sessions     SessionToken[]
+  createdAt    DateTime       @default(now())
 
   @@map("users")
 }
