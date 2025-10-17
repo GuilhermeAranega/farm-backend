@@ -3,8 +3,6 @@ import { FastifyInstance } from "fastify";
 import { prisma } from "../lib/prisma";
 import { z } from "zod";
 import { authenticate } from "../hooks/authenticate";
-import { id } from "date-fns/locale";
-import console from "console";
 
 export async function getDevices(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
@@ -35,7 +33,6 @@ export async function getDevices(app: FastifyInstance) {
     },
     async (req, res) => {
       const devices = await prisma.device.findMany({});
-      console.log(devices);
 
       if (devices.length === 0) {
         return res
