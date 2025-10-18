@@ -2,6 +2,7 @@ import mqtt from "mqtt";
 import { prisma } from "../lib/prisma";
 import { sendNotification } from "./notifications";
 import { broadcastNotification } from "./websocket";
+import { checkEnvironmentalAnomalies } from "./environment-warnings";
 
 const client = mqtt.connect("mqtt://localhost:1883");
 
@@ -56,6 +57,13 @@ client.on("message", async (topic, message) => {
   }
 
   if (topic === "sensor/environment") {
+    await checkEnvironmentalAnomalies({
+      deviceId: payload.deviceId,
+      soilMoisture: payload.soilMoisture,
+      airTemperature: payload.airTemperature,
+      airHumidity: payload.airHumidity,
+      lightIntensity: payload.lightIntensity,
+    });
     await prisma.environmentalData.create({
       data: {
         soilMoisture: payload.soilMoisture,
