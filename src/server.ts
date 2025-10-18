@@ -34,6 +34,8 @@ import { getDevices } from "./routes/get-devices";
 import { updateDeviceName } from "./routes/update-device-name";
 import { getAccountData } from "./routes/get-account-data";
 import { editAccount } from "./routes/edit-account";
+import { getEnergyMetricsByDevice } from "./routes/get-energy-metrics-by-device";
+import { getEnvironmentalMetricsByDevice } from "./routes/get-environmental-metrics-by-device";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 app.register(cors, {
@@ -54,6 +56,8 @@ app.register(getEnvironmentalMetricByDate);
 app.register(getReportData);
 
 app.register(getAllEnergyMetrics);
+app.register(getEnergyMetricsByDevice);
+app.register(getEnvironmentalMetricsByDevice);
 
 app.register(getNotifications);
 app.register(readNotification);
