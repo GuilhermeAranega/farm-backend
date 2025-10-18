@@ -40,9 +40,6 @@ model EnergyMetric {
 model WaterPumpLog {
   id        String   @id @default(cuid()) @map("_id")
   timestamp DateTime @default(now())
-  startTime DateTime @map("start_time")
-  endTime   DateTime @map("end_time")
-  flowRate  Float    @map("flow_rate")
 
   @@map("water_pump_log")
 }
