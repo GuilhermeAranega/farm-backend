@@ -40,6 +40,9 @@ model EnergyMetric {
 model WaterPumpLog {
   id        String   @id @default(cuid()) @map("_id")
   timestamp DateTime @default(now())
+  action    String
+  device    Device   @relation(fields: [deviceId], references: [deviceId])
+  deviceId  Int
 
   @@map("water_pump_log")
 }
@@ -67,11 +70,12 @@ enum ReportStatus {
 }
 
 model Device {
-  id         String   @id @default(cuid()) @map("_id")
-  name       String
-  deviceId   Int      @unique @map("device_id")
-  status     Boolean
-  lastUpdate DateTime
+  id           String         @id @default(cuid()) @map("_id")
+  name         String
+  deviceId     Int            @unique @map("device_id")
+  status       Boolean
+  lastUpdate   DateTime
+  WaterPumpLog WaterPumpLog[]
 
   @@map("devices")
 }
