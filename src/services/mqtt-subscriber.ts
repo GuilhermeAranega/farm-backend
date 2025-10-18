@@ -3,6 +3,7 @@ import { prisma } from "../lib/prisma";
 import { sendNotification } from "./notifications";
 import { broadcastNotification } from "./websocket";
 import { checkEnvironmentalAnomalies } from "./environment-warnings";
+import { checkEnergyAnomalies } from "./energy-warnings";
 
 const client = mqtt.connect("mqtt://localhost:1883");
 
@@ -86,12 +87,11 @@ client.on("message", async (topic, message) => {
         deviceId: payload.deviceId,
       },
     });
-    await checkEnvironmentalAnomalies({
+    await checkEnergyAnomalies({
       deviceId: payload.deviceId,
-      soilMoisture: payload.soilMoisture,
-      airTemperature: payload.airTemperature,
-      airHumidity: payload.airHumidity,
-      lightIntensity: payload.lightIntensity,
+      solarPower: payload.solarPower,
+      batteryVoltage: payload.batteryVoltage,
+      batteryCharge: payload.batteryCharge,
     });
   }
 });
