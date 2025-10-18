@@ -57,13 +57,6 @@ client.on("message", async (topic, message) => {
   }
 
   if (topic === "sensor/environment") {
-    await checkEnvironmentalAnomalies({
-      deviceId: payload.deviceId,
-      soilMoisture: payload.soilMoisture,
-      airTemperature: payload.airTemperature,
-      airHumidity: payload.airHumidity,
-      lightIntensity: payload.lightIntensity,
-    });
     await prisma.environmentalData.create({
       data: {
         soilMoisture: payload.soilMoisture,
@@ -73,6 +66,13 @@ client.on("message", async (topic, message) => {
         timestamp: readAt,
         deviceId: payload.deviceId,
       },
+    });
+    await checkEnvironmentalAnomalies({
+      deviceId: payload.deviceId,
+      soilMoisture: payload.soilMoisture,
+      airTemperature: payload.airTemperature,
+      airHumidity: payload.airHumidity,
+      lightIntensity: payload.lightIntensity,
     });
   }
 
@@ -85,6 +85,13 @@ client.on("message", async (topic, message) => {
         timestamp: readAt,
         deviceId: payload.deviceId,
       },
+    });
+    await checkEnvironmentalAnomalies({
+      deviceId: payload.deviceId,
+      soilMoisture: payload.soilMoisture,
+      airTemperature: payload.airTemperature,
+      airHumidity: payload.airHumidity,
+      lightIntensity: payload.lightIntensity,
     });
   }
 });
