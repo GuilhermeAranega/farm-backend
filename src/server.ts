@@ -33,6 +33,7 @@ import { deleteAccount } from "./routes/delete-account";
 import { getDevices } from "./routes/get-devices";
 import { updateDeviceName } from "./routes/update-device-name";
 import { getAccountData } from "./routes/get-account-data";
+import { editAccount } from "./routes/edit-account";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 app.register(cors, {
@@ -68,6 +69,7 @@ app.register(createAccount);
 app.register(loginAccount);
 app.register(deleteAccount);
 app.register(getAccountData);
+app.register(editAccount);
 
 const PORT = parseInt(process.env.PORT || "3333");
 
