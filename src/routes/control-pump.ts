@@ -3,6 +3,7 @@ import { z } from "zod";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { turnPumpOn, turnPumpOff } from "../services/pump-controller";
 import { authenticate } from "../hooks/authenticate";
+import { prisma } from "../lib/prisma";
 
 export async function controlPump(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -27,6 +28,17 @@ export async function controlPump(app: FastifyInstance) {
 
       if (action === "ON") turnPumpOn(deviceId);
       if (action === "OFF") turnPumpOff(deviceId);
+
+      await prisma.waterPumpLog.create({
+        data: {
+          action,
+          device: {
+            connect: {
+              deviceId: 1,
+            },
+          },
+        },
+      });
 
       return res
         .status(200)
